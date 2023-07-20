@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.5 <4.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -37,7 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   cloud_firestore: ^4.8.2
   firebase_auth: ^4.6.3
-  http: ^1.1.0
+  http: ^1.0.0
   syncfusion_flutter_charts: ^22.1.38
   fl_chart: ^0.63.0
   candlesticks: ^2.1.0
@@ -45,17 +45,25 @@ dependencies:
   flutter_screenutil: ^5.8.4
   google_fonts: ^5.1.0
   chart_sparkline: ^1.0.13
+  
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  flutter_launcher_icons: ^0.13.1
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+flutter_icons:
+  android: true
+  ios: true
+  
+  image_path: "assets/stock_app-logo.jpg"
+  adaptive_icon_background: '#ffffff'
+  adaptive_icon_foreground: "assets/play_store_512.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
