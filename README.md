@@ -16,10 +16,6 @@ The [Twelve Data]([http://www.feedbooks.com/api](https://rapidapi.com/twelvedata
 <a href="https://www.vecteezy.com/vector-art/599678-book-reading-logo-and-symbols-template-icons">App
 icon</a> <br> <br>
 
-To download this app, <a href="https://codemagic.io/apps/5e230defc5faa60315b1df62/5e230defc5faa60315b1df61/latest_build">click here</a> to see the codemagic builds. You can choose to install the `apk`.
-You can download from the appstore if you use an iPhone, iPad or a Mac with Silicon chip.
-<br>
-<a href="https://apps.apple.com/app/openleaf/id6450374275"><img src="https://www.freepnglogos.com/uploads/app-store-logo-png/download-on-the-app-store-logo-png-23.png" width="200"></img></a>
 <br> Please star⭐ the repo if you like what you see😉.
 
 ## 💻 Requirements
@@ -27,14 +23,15 @@ You can download from the appstore if you use an iPhone, iPad or a Mac with Sili
 - Any Operating System (ie. MacOS X, Linux, Windows)
 - Any IDE with Flutter SDK installed (ie. IntelliJ, Android Studio, VSCode etc)
 - A little knowledge of Dart and Flutter
+- Quick and simple FireBase setup.
 
 ## ✨ Features
 
-- [x] Download eBooks.
-- [x] Read eBooks.
-- [x] Favorites.
-- [x] Dark Mode
-- [x] Swipe to delete downloads.
+- [x] Select any stock (for now only availavle for NASDAQ stocks).
+- [x] View stocks.
+- [x] Real Time price view.       
+- [x] Get personilased stock news.
+
 
 ## 📸 ScreenShots
 
@@ -50,29 +47,27 @@ You can download from the appstore if you use an iPhone, iPad or a Mac with Sili
 | <img src="ss/11.png" width="300"> | <img src="ss/12.png" width="300"> |
 | <img src="ss/13.png" width="300"> | <img src="ss/14.png" width="300"> |
 
-##### Desktop
-
-<img src="ss/desktop_1.png" width="800">
 
 ## 🔌 Plugins
 
-| Name                                                                   | Usage                                         |
-| ---------------------------------------------------------------------- | --------------------------------------------- |
-| [**Riverpod**](https://pub.dev/packages/flutter_riverpod)              | State Management                              |
-| [**Sembast**](https://pub.dev/packages/sembast)                        | NoSQL database to store Favorites & Downloads |
-| [**XML2JSON**](https://pub.dev/packages/xml2json)                      | Convert XML to JSON                           |
-| [**DIO**](https://pub.dev/packages/dio)                                | Network calls and File Download               |
-| [**Iridium Reader**](https://github.com/Mantano/iridium_reader_widget) | Plug and play reader widget for epubs         |
+| Name                                                                                   | Version   | Usage                                           |
+| -------------------------------------------------------------------------------------- | --------- | ----------------------------------------------- |
+| [**cupertino_icons**](https://pub.dev/packages/cupertino_icons)                         | ^1.0.2    | Cupertino (iOS-style) icons for Flutter apps   |
+| [**cloud_firestore**](https://pub.dev/packages/cloud_firestore)                         | ^4.8.2    | Firebase Cloud Firestore API for Flutter       |
+| [**firebase_auth**](https://pub.dev/packages/firebase_auth)                             | ^4.6.3    | Firebase Authentication API for Flutter        |
+| [**http**](https://pub.dev/packages/http)                                               | ^1.0.0    | HTTP client for Flutter                        |
+| [**syncfusion_flutter_charts**](https://pub.dev/packages/syncfusion_flutter_charts)     | ^22.1.38  | Charts package by Syncfusion for Flutter       |
+| [**fl_chart**](https://pub.dev/packages/fl_chart)                                       | ^0.63.0   | Beautiful, animated, and interactive charts    |
+| [**candlesticks**](https://pub.dev/packages/candlesticks)                               | ^2.1.0    | Candlestick charts for Flutter                 |
+| [**liquid_pull_to_refresh**](https://pub.dev/packages/liquid_pull_to_refresh)           | ^3.0.1    | Pull to refresh for Flutter                    |
+| [**flutter_screenutil**](https://pub.dev/packages/flutter_screenutil)                   | ^5.8.4    | Flutter plugin for adapting screen and font size|
+| [**google_fonts**](https://pub.dev/packages/google_fonts)                               | ^5.1.0    | Custom fonts from Google Fonts for Flutter     |
+| [**chart_sparkline**](https://pub.dev/packages/chart_sparkline)                         | ^1.0.13   | Sparkline charts package for Flutter           |
+
+
 
 ## 🤓 Author(s)
 
-**Festus Babajide Olusegun**
-[![Twitter Follow](https://img.shields.io/twitter/follow/iamjideguru.svg?style=social)](https://twitter.com/iamjideguru)
+**Hamid Emre Dirim**
+[Fallow Linkedin](https://www.linkedin.com/in/hamid-emre-dirim/)
 
-## 🔖 LICENCE
-
-[Apache-2.0](https://github.com/JideGuru/FlutterEbookApp/blob/master/LICENSE)
-
-<a href="https://github.com/JideGuru/FlutterEbookApp">
-        <img width="500" alt="Star History Chart" src="https://api.star-history.com/svg?repos=JideGuru/FlutterEbookApp&type=Date">
-      </a>
