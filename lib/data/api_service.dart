@@ -21,7 +21,7 @@ class ApiService {
 
     if (response.statusCode == 200) {
   
-      print(json.decode(response.body).toString());
+      
       return json.decode(response.body) as Map<String, dynamic>;
 
     } else {

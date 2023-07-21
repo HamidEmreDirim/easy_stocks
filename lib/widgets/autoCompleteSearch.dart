@@ -85,6 +85,7 @@ class _StockSearchBarState extends State<StockSearchBar> {
       return (_showListStock && _showListUser) ? Column(
         children: [
       Autocomplete<Stock>(
+      
       optionsBuilder: (TextEditingValue textEditingValue) {
         
         if (textEditingValue.text == '') {
@@ -102,7 +103,7 @@ class _StockSearchBarState extends State<StockSearchBar> {
           alignment: Alignment.topLeft,
           child:  Material( 
             child:  Container( 
-              width: 350,
+              width: 250,
       
               child: ListView.builder(padding: EdgeInsets.all(10),itemCount: options.length,itemBuilder: (context, i){
                 return Column(

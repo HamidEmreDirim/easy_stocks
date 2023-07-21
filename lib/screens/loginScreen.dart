@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ms_undraw/ms_undraw.dart';
 import 'package:stock_app/screens/forgotPasswordScreen.dart';
 
 class LoginPage extends StatefulWidget {
@@ -38,23 +39,25 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: Padding(
-        padding: const EdgeInsets.only(top: 100),
+        padding: const EdgeInsets.only(top: 60),
         child: SafeArea(
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center
               ,children: [
-              Icon(Icons.bar_chart_sharp,
-              size: 80,),
-              SizedBox(height: 50,),
+              UnDraw(
+                height: 150,
+                color: const Color.fromARGB(255, 131, 233, 184),
+                illustration: UnDrawIllustration.projections,
+                placeholder: Text("Illustration is loading..."), //optional, default is the CircularProgressIndicator().
+                errorWidget: Icon(Icons.error_outline, color: Colors.red, size: 50), //optional, default is the Text('Could not load illustration!').
+),
+              SizedBox(height: 10,),
               Text('Hello Again',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 34),),
-              SizedBox(height: 10,),
-              Center(
-                child: Text('Easy Stock',
-                style: TextStyle( fontSize: 24),),
-              ),
-              SizedBox(height: 40,),
+              SizedBox(height: 30,),
+              
+             
               
               
               // EMAIL TEXT FIELD 

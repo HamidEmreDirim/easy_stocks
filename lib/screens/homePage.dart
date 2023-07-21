@@ -1,21 +1,23 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ms_undraw/ms_undraw.dart';
 import 'package:stock_app/screens/addStockPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:stock_app/screens/newsPage.dart';
 import 'package:stock_app/screens/stocksPage.dart';
+import 'package:stock_app/providers/settingsProvider.dart';
 
 
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() =>
+  ConsumerState<HomePage> createState() =>
       _HomePageState();
 }
 
-class _HomePageState
-    extends State<HomePage> {
+class _HomePageState extends ConsumerState<HomePage> {
   int _selectedIndex = 0;
 
 final  _widgetOptions = [
@@ -28,36 +30,95 @@ final  _widgetOptions = [
       _selectedIndex = index;
     });
   }
-
+  bool isDark = false;
+  bool systemDefault = true;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final _switchKey = new GlobalKey();
   @override
   Widget build(BuildContext context) {
+    final notifier = ref.watch(themeNotifierProvider);
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: Drawer(
+        
+        child: ListView(
+          children: [
+            UnDraw(
+          height: 220,
+          
+          color: const Color.fromARGB(255, 131, 233, 184),
+          illustration: UnDrawIllustration.interior_design,
+          placeholder: Text("Illustration is loading..."), //optional, default is the CircularProgressIndicator().
+          errorWidget: Icon(Icons.error_outline, color: Colors.red, size: 50), //optional, default is the Text('Could not load illustration!').
+
+
+        )
+            ,
+            ListTile(
+              
+              leading: Text("Dark Mode", style: TextStyle(fontSize: 15),),
+              title: Switch(
+              key: _switchKey,
+              // This bool value toggles the switch.
+              value: isDark,
+              
+              activeColor: Colors.blueGrey,
+              onChanged: (bool value) {
+                // This is called when the user toggles the switch.
+                setState(() {
+                  isDark = value;
+                });
+                if (isDark){
+                  notifier.setTheme(ThemeMode.dark);
+                }
+                else{
+                  notifier.setTheme(ThemeMode.light);
+                }
+                }),
+                
+            ),
+             ListTile(
+              leading: Text("Use System Default", style: TextStyle(fontSize: 15),),
+              title: Switch(
+              // This bool value toggles the switch.
+              value: systemDefault,
+              activeColor: Colors.blueGrey,
+              onChanged: (bool value) {
+                // This is called when the user toggles the switch.
+                setState(() {
+                  systemDefault = value;
+                  
+                });
+                if (systemDefault){
+                  notifier.setTheme(ThemeMode.system);
+            
+             
+                }
+                }
+          
+                ),
+                
+
+            )
+            ,
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text("Sign Out"),
+              onTap: (){
+                FirebaseAuth.instance.signOut();
+              },
+            )
+
+          ],
+        ),
+      ),
       appBar:  AppBar(
-           
+            
             toolbarHeight: 65,
             centerTitle: false,
-            leading: (_selectedIndex == 0) ? PopupMenuButton(
-                  child: Icon(
-                    Icons.settings,
-                    size: 35,
-                                      ),
-                  itemBuilder: (BuildContext bc) {
-    return  [
-      PopupMenuItem(
-        child: Text("Settings"),
-        value: '/hello',
-      ),
-      PopupMenuItem(
-        child: Text("Sign Out"),
-        onTap: () {
-          FirebaseAuth.instance.signOut();
-        },
-        
-      )
-    ];
-   
-  },
-  ): GestureDetector(child: Icon(Icons.arrow_back),
+            leading: (_selectedIndex == 0) ? IconButton(onPressed: (){
+              _scaffoldKey.currentState!.openDrawer();
+            }, icon: Icon(Icons.menu)) : GestureDetector(child: Icon(Icons.arrow_back),
   onTap: () {
     setState(() {
       _selectedIndex = 0;

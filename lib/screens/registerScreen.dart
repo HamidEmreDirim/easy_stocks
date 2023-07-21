@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ms_undraw/ms_undraw.dart';
 
 class RegisterPage extends StatefulWidget {
   final VoidCallback showLoginPage;
@@ -50,23 +51,22 @@ class _RegisterPageState extends State<RegisterPage> {
       backgroundColor: Colors.grey[300],
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(top: 100),
+          padding: const EdgeInsets.only(top: 140),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center
               ,children: [
-              Icon(Icons.bar_chart_sharp,
-              size: 80,),
+              UnDraw(
+            height: 120,
+            color: const Color.fromARGB(255, 131, 233, 184),
+            illustration: UnDrawIllustration.hello,
+            placeholder: Text("Illustration is loading..."), //optional, default is the CircularProgressIndicator().
+            errorWidget: Icon(Icons.error_outline, color: Colors.red, size: 50), //optional, default is the Text('Could not load illustration!').
+),
               SizedBox(height: 50,),
-              Text('Hello!',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 34),),
-              SizedBox(height: 10,),
-              Center(
-                child: Text('Stock APP',
-                style: TextStyle( fontSize: 24),),
-              ),
-              SizedBox(height: 40,),
               
+              
+    
               
               // EMAIL TEXT FIELD 
               Padding(

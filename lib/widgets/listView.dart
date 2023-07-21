@@ -28,16 +28,33 @@ class _StockStreamState extends State<StockStream> {
 
   Future  getDailyChartData(String s) async {
   
-  final List<double> temp = [];
-  final data = await ApiService.getDailyStockData(s, "1h", "24");
+  List<double> temp = [];
+  
+  final data = await ApiService.getDailyStockData(s, "5min", "100");
+  final int today = DateTime.now().day;
 
-  for (var item in data["values"]){
-      temp.add(double.parse(item["low"]));
+  if (DateTime.parse(data["values"][0]["datetime"]).day == today){
+  for (var item in data["values"]){      
+      DateTime datetime = DateTime.parse(item["datetime"]);
+      if(datetime.day == today){
+        temp.add(double.parse(item["close"]));
+      }
   }
+  }
+  else{
+    for (var item in data["values"]){      
+      DateTime datetime = DateTime.parse(item["datetime"]);
+      if(datetime.day == today -1){
+        temp.add(double.parse(item["close"]));
+      }
 
+  }
+  
+  temp = temp.reversed.toList();
   return temp;
 
 }
+  }
 
 
 
@@ -207,7 +224,7 @@ class _StockStreamState extends State<StockStream> {
                                       symbol: userStockList[i].symbol,
                                       name: userStockList[i].name,
                                       currPrice: FutureBuilder(future: getRealTimeData(userStockList[i].symbol) , builder: (BuildContext context, AsyncSnapshot snapshot) {
-                                        if(snapshot.connectionState == ConnectionState.done){
+                                        if(snapshot.connectionState == ConnectionState.done && snapshot.hasData){
                                           
                                           return Column(
                                         crossAxisAlignment:
@@ -239,7 +256,7 @@ class _StockStreamState extends State<StockStream> {
                                             ),
                                     miniChart: FutureBuilder(future: getDailyChartData(userStockList[i].symbol),
                                     builder: (BuildContext context, AsyncSnapshot snapshot) {
-                                        if(snapshot.connectionState == ConnectionState.done){
+                                        if(snapshot.connectionState == ConnectionState.done && snapshot.hasData){
                                           
                                           return MiniChart(data: snapshot.data);
 
