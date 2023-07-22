@@ -13,7 +13,7 @@ The [RealStonks]([http://www.feedbooks.com/api](https://rapidapi.com/amansharma2
 The [Twelve Data]([http://www.feedbooks.com/api](https://rapidapi.com/twelvedata/api/twelve-data1)) was used to get historical stock data to showcase in graphs. <br>
 <br>
 
-<a src="git_images/1.png" >App
+<a href="[git_images/stock_app-logo.jpg](https://github.com/HamidEmreDirim/easy_stocks/blob/master/git_images/stock_app-logo.jpg)" >App
 icon</a> <br> <br>
 
 ## 📸 ScreenShots
@@ -22,13 +22,12 @@ icon</a> <br> <br>
 
 | Light                             | Dark                              |
 | --------------------------------- | --------------------------------- |
-| <img src="ss/1.png" width="300">  | <img src="ss/2.png" width="300">  |
-| <img src="ss/3.png" width="300">  | <img src="ss/4.png" width="300">  |
-| <img src="ss/5.png" width="300">  | <img src="ss/6.png" width="300">  |
-| <img src="ss/7.png" width="300">  | <img src="ss/8.png" width="300">  |
-| <img src="ss/9.png" width="300">  | <img src="ss/10.png" width="300"> |
-| <img src="ss/11.png" width="300"> | <img src="ss/12.png" width="300"> |
-| <img src="ss/13.png" width="300"> | <img src="ss/14.png" width="300"> |
+| <img src="git_images/Screenshot_1690031173.png" width="300">  | <img src="git_images/Screenshot_1690033034.png" width="300">  |
+| <img src="git_images/Screenshot_1690031201.png" width="300">  | <img src="git_images/Screenshot_1690033067.png" width="300">  |
+| <img src="git_images/Screenshot_1690031207.png" width="300">  | <img src="git_images/Screenshot_1690033073.png" width="300">  |
+| <img src="git_images/Screenshot_1690031230.png" width="300">  | <img src="git_images/Screenshot_1690033079.png" width="300">  |
+| <img src="git_images/Screenshot_1690031252.png" width="300">  | <img src="git_images/Screenshot_1690033086.png" width="300">  |
+| <img src="git_images/Screenshot_1690032719.png" width="300">  | <img src="git_images/Screenshot_1690033115.png" width="300">  |
 
 
 <br> Please star⭐ the repo if you like what you see😉.
@@ -64,7 +63,6 @@ icon</a> <br> <br>
 | [**candlesticks**](https://pub.dev/packages/candlesticks)                               | ^2.1.0    | Candlestick charts for Flutter                 |
 | [**liquid_pull_to_refresh**](https://pub.dev/packages/liquid_pull_to_refresh)           | ^3.0.1    | Pull to refresh for Flutter                    |
 | [**flutter_screenutil**](https://pub.dev/packages/flutter_screenutil)                   | ^5.8.4    | Flutter plugin for adapting screen and font size|
-| [**google_fonts**](https://pub.dev/packages/google_fonts)                               | ^5.1.0    | Custom fonts from Google Fonts for Flutter     |
 | [**chart_sparkline**](https://pub.dev/packages/chart_sparkline)                         | ^1.0.13   | Sparkline charts package for Flutter           |
 
 
