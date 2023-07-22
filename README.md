@@ -13,8 +13,23 @@ The [RealStonks]([http://www.feedbooks.com/api](https://rapidapi.com/amansharma2
 The [Twelve Data]([http://www.feedbooks.com/api](https://rapidapi.com/twelvedata/api/twelve-data1)) was used to get historical stock data to showcase in graphs. <br>
 <br>
 
-<a href="https://www.vecteezy.com/vector-art/599678-book-reading-logo-and-symbols-template-icons">App
+<a src="git_images/1.png" >App
 icon</a> <br> <br>
+
+## 📸 ScreenShots
+
+<!-- <img src="ss/mockup.png"/> -->
+
+| Light                             | Dark                              |
+| --------------------------------- | --------------------------------- |
+| <img src="ss/1.png" width="300">  | <img src="ss/2.png" width="300">  |
+| <img src="ss/3.png" width="300">  | <img src="ss/4.png" width="300">  |
+| <img src="ss/5.png" width="300">  | <img src="ss/6.png" width="300">  |
+| <img src="ss/7.png" width="300">  | <img src="ss/8.png" width="300">  |
+| <img src="ss/9.png" width="300">  | <img src="ss/10.png" width="300"> |
+| <img src="ss/11.png" width="300"> | <img src="ss/12.png" width="300"> |
+| <img src="ss/13.png" width="300"> | <img src="ss/14.png" width="300"> |
+
 
 <br> Please star⭐ the repo if you like what you see😉.
 
@@ -31,21 +46,9 @@ icon</a> <br> <br>
 - [x] View stocks.
 - [x] Real Time price view.       
 - [x] Get personilased stock news.
+- [x] Dark mode and system default theme option.
 
 
-## 📸 ScreenShots
-
-<!-- <img src="ss/mockup.png"/> -->
-
-| Light                             | Dark                              |
-| --------------------------------- | --------------------------------- |
-| <img src="ss/1.png" width="300">  | <img src="ss/2.png" width="300">  |
-| <img src="ss/3.png" width="300">  | <img src="ss/4.png" width="300">  |
-| <img src="ss/5.png" width="300">  | <img src="ss/6.png" width="300">  |
-| <img src="ss/7.png" width="300">  | <img src="ss/8.png" width="300">  |
-| <img src="ss/9.png" width="300">  | <img src="ss/10.png" width="300"> |
-| <img src="ss/11.png" width="300"> | <img src="ss/12.png" width="300"> |
-| <img src="ss/13.png" width="300"> | <img src="ss/14.png" width="300"> |
 
 
 ## 🔌 Plugins
