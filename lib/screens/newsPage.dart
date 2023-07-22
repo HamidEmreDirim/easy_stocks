@@ -44,15 +44,21 @@ class _NewsPageState extends State<NewsPage> {
   
 
   Future <bool>  getNews() async {
-      newsItem = [];
-      for (var item in symbolList){
-        var data = await ApiService.getStockNew(item);
-        for (var item in data["data"]){
-          newsItem.add(NewsItem.fromJson(item));
-          print(item["id"]);
+    newsItem = [];
+    for (var item in symbolList){
+    
+    try {
+    var data = await ApiService.getStockNew(item);
+    for (var item in data["data"]){
+      newsItem.add(NewsItem.fromJson(item));     
         }
+      } on Error catch (e) {
+            print("error asdadsasdad");
+            
       }
-             
+
+      }
+          
       newsItem.sort((a, b) => a.publishOn.compareTo(b.publishOn));
       newsItem = newsItem.reversed.toList();
       setState(() {

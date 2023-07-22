@@ -50,8 +50,6 @@ final  _widgetOptions = [
           illustration: UnDrawIllustration.interior_design,
           placeholder: Text("Illustration is loading..."), //optional, default is the CircularProgressIndicator().
           errorWidget: Icon(Icons.error_outline, color: Colors.red, size: 50), //optional, default is the Text('Could not load illustration!').
-
-
         )
             ,
             ListTile(

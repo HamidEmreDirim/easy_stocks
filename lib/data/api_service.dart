@@ -70,12 +70,20 @@ var url = Uri.parse('https://realstonks.p.rapidapi.com/$symbol');
     var response = await http.get(url.replace(queryParameters: params), headers: headers);
 
     if (response.statusCode == 200) {
-      final temp = json.decode(response.body) as Map<String, dynamic>;
-      temp["data"][0]["symbol"] = symbol;
-      temp["data"][1]["symbol"] = symbol;
-      temp["data"][2]["symbol"] = symbol;
-      return temp;
+      try {
+  final temp = json.decode(response.body) as Map<String, dynamic>;
+    
+  for (int i = 0; i < temp["data"].length ; i++){ 
+  temp["data"][i]["symbol"] = symbol;
+  temp["data"][i]["symbol"] = symbol;
+  temp["data"][i]["symbol"] = symbol;
+  }
+    return temp;
+} on Error catch (e) {
+   throw Error();
 
+}
+      
     } else {
       throw Exception('Failed to fetch data');
     }

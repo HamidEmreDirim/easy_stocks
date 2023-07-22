@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'package:stock_app/data/stock_model.dart';
+import 'package:stock_app/data/models.dart/stock_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 

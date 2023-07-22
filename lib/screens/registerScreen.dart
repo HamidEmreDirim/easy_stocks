@@ -78,6 +78,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: _emailController,
                     decoration: InputDecoration(
                       border: InputBorder.none,
+                      hintStyle: TextStyle(color: Colors.black),
                       hintText: ' Email',
                       
                 
@@ -99,6 +100,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     obscureText: true,
                     decoration: InputDecoration(
                       border: InputBorder.none,
+                      hintStyle: TextStyle(color: Colors.black),
                       hintText: ' Password',
                       
                 
@@ -121,6 +123,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: ' Confirm Password',
+                      hintStyle: TextStyle(color: Colors.black)
                       
                 
                     ) ,

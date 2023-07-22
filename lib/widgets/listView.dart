@@ -2,25 +2,28 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stock_app/data/api_service.dart';
 import 'package:stock_app/screens/stockScreen.dart';
 import 'package:stock_app/widgets/listCard.dart';
 import 'package:stock_app/widgets/miniChart.dart';
-import '../data/stock_model.dart';
+import '../data/models.dart/stock_model.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
+import '../providers/stockProvider.dart';
 
 
 
 
-class StockStream extends StatefulWidget {
+
+class StockStream extends ConsumerStatefulWidget {
   const StockStream({super.key});
 
   @override
-  State<StockStream> createState() => _StockStreamState();
+  ConsumerState<StockStream> createState() => _StockStreamState();
 }
 
-class _StockStreamState extends State<StockStream> {
+class _StockStreamState extends ConsumerState<StockStream> {
   bool _showList = false;
   var stockList = [];
 
@@ -133,17 +136,11 @@ class _StockStreamState extends State<StockStream> {
     
   }
 
-
-  
-
-
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
+    
+    
+
     return (_showList)
         ? Column(
           children: [
