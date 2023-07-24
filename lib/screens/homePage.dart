@@ -20,10 +20,7 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   int _selectedIndex = 0;
 
-final  _widgetOptions = [
-    StocksPage(),
-    NewsPage()
-  ];
+
 
   void _onItemTapped(int index) {
     setState(() {
@@ -143,8 +140,12 @@ final  _widgetOptions = [
       ): Container(),
             ],),
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
+        child: IndexedStack(children: <Widget>[
+          StocksPage(),
+          NewsPage()
+        ],
+        index: _selectedIndex,
+      )),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
