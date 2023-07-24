@@ -28,47 +28,7 @@ class _StockStreamState extends ConsumerState<StockStream> {
   var stockList = [];
 
 
-
-  Future  getDailyChartData(String s) async {
-  
-  List<double> temp = [];
-  
-  final data = await ApiService.getDailyStockData(s, "5min", "100");
-  final int today = DateTime.now().day;
-
-  if (DateTime.parse(data["values"][0]["datetime"]).day == today){
-  for (var item in data["values"]){      
-      DateTime datetime = DateTime.parse(item["datetime"]);
-      if(datetime.day == today){
-        temp.add(double.parse(item["close"]));
-      }
-  }
-  }
-  else{
-    for (var item in data["values"]){      
-      DateTime datetime = DateTime.parse(item["datetime"]);
-      if(datetime.day == today -1){
-        temp.add(double.parse(item["close"]));
-      }
-
-  }
-  
-  temp = temp.reversed.toList();
-  return temp;
-
-}
-  }
-
-
-
-
-
-
-
-
-
-
-  Future<bool> checkCondition() async {
+  Future<bool> getAllStocks() async {
     await FirebaseFirestore.instance
         .collection("stocks")
         .doc("data")
@@ -98,7 +58,7 @@ class _StockStreamState extends ConsumerState<StockStream> {
 
   
   var symbolList = [];
-  Future<bool> checkCondition2() async {
+  Future<bool> getSelectedStocks() async {
     await FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid).get().then(
       (DocumentSnapshot snapshot)  {        
         final userData = snapshot.data() as Map<String, dynamic>;
@@ -111,24 +71,11 @@ class _StockStreamState extends ConsumerState<StockStream> {
     
     return true;
   }
-  
- 
-  
-  Future  getRealTimeData(String symbol) async {
-
-    Map<String, dynamic> data = await ApiService.getLiveStockPrice(symbol);
-
-    return data;    
-  }
-
-
-
-
 
   @override
   void initState() {
     super.initState();
-    checkCondition().then((value) {
+    getAllStocks().then((value) {
       setState(() {
         _showList = value;
       });
@@ -138,143 +85,153 @@ class _StockStreamState extends ConsumerState<StockStream> {
 
   @override
   Widget build(BuildContext context) {
-    
+    final snapshotAsync = ref.watch(symbolStreamProvider);
     
 
-    return (_showList)
-        ? Column(
-          children: [
-            StreamBuilder<DocumentSnapshot>(
-                stream:  FirebaseFirestore.instance
-                    .collection("users")
-                    .doc(FirebaseAuth.instance.currentUser!.uid)
-                    .snapshots(),
-                builder: (context, AsyncSnapshot asyncSnapshot) {
-                  if (asyncSnapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  } else if (asyncSnapshot.hasError) {
-                    return Text('Error: ${asyncSnapshot.error}');
-                  } else {
-                    
-                    List<dynamic> userSymbolList =
-                        asyncSnapshot.data!.data()["selected_stocks"];
-                    List<Stock> userStockList = [];
-  
-                    // Perform operations on userSymbolList
-                    for (dynamic item in userSymbolList) {
-                      Stock? temp = stockList.firstWhere(
-                        (element) => element.symbol == item.toString(),
-                        orElse: () => null,
-                      );
+   return (_showList)
+    ? Column(
+        children: [
+          
+          snapshotAsync.when(
+            data: (snapshot) {
+              if (snapshot.exists) {
+                Map<String, dynamic>? data =
+                    snapshot.data() as Map<String, dynamic>?;
 
-                      if (temp != null) {
-                        userStockList.add(temp);
-                      }
+                if (data != null) {
+                  List<dynamic> userSymbolList = data["selected_stocks"];
+                  List<Stock> userStockList = []; // Your Stock list conversion here
+
+                  for (dynamic item in userSymbolList) {
+                    Stock? temp = stockList.firstWhere(
+                      (element) => element.symbol == item.toString(),
+                      orElse: () => null,
+                    );
+
+                    if (temp != null) {
+                      userStockList.add(temp);
                     }
+                  }
 
-                    return Expanded(
-                      child: LiquidPullToRefresh(
-                        color: Colors.white,
-                        backgroundColor: Colors.black26,
-                        animSpeedFactor: 6,
-                        onRefresh: checkCondition,
-                        child: ListView.builder(
-                            itemCount: userStockList.length,
-                            itemBuilder: (context, i) {
-                              return Dismissible(
-                                key: GlobalKey(),
-                                onDismissed: (direction){
-                                  String tempStock = userSymbolList[i];
-                                  userSymbolList.removeAt(i);
-                                  FirebaseFirestore.instance.collection("users").doc(FirebaseAuth
-                                  .instance.currentUser!.uid)
-                                  .update((
-                                    {"selected_stocks": userSymbolList.toSet().toList()}));
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('Removed ${tempStock}'),
-                                      action: SnackBarAction(
-                                        label: 'Undo',
-                                        onPressed: () {
-                                          userSymbolList.insert(i, tempStock);
-                                          FirebaseFirestore.instance.collection("users").doc(FirebaseAuth
-                                  .instance.currentUser!.uid)
-                                  .update((
-                                    {"selected_stocks": userSymbolList.toSet().toList()}));
-                                          
-                                        },
-                                      ),
-                                    ),
-                                  );
-                                },
-                                direction: DismissDirection.horizontal,
-                                dragStartBehavior: DragStartBehavior.start,
-                                movementDuration: const Duration(milliseconds: 200),
-                                resizeDuration: const Duration(milliseconds: 1000),
-                                
-                                child: GestureDetector(
-                                  onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => StockScreen(symbol: userStockList[i].symbol)));
-                                  },
-                                  child: ListObject(
-                                    
-                                      symbol: userStockList[i].symbol,
-                                      name: userStockList[i].name,
-                                      currPrice: FutureBuilder(future: getRealTimeData(userStockList[i].symbol) , builder: (BuildContext context, AsyncSnapshot snapshot) {
-                                        if(snapshot.connectionState == ConnectionState.done && snapshot.hasData){
-                                          
-                                          return Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          FittedBox(
-                                            child: Text(
-                                              "\$ ${snapshot.data["price"].toString()}",
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 15),
-                                            ),
-                                          ),
-                                          Row(
-                            
-                                            children: [
-                                            
-                                              const SizedBox(width: 8),
-                                              Text( "% "+snapshot.data["change_percentage"].toString(),
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ) ;
-                                        }else{
-                                          return Center(child: CircularProgressIndicator());
-                                        }
-                                      }
-                                            ),
-                                    miniChart: FutureBuilder(future: getDailyChartData(userStockList[i].symbol),
-                                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                                        if(snapshot.connectionState == ConnectionState.done && snapshot.hasData){
-                                          
-                                          return MiniChart(data: snapshot.data);
-
-
-                                        }else{
-                                          return CircularProgressIndicator();
-                                        }
-                                      }),
-                                    ),
+                  return Expanded(
+                    child: LiquidPullToRefresh(
+                      color: Colors.white,
+                      backgroundColor: Colors.black26,
+                      animSpeedFactor: 6,
+                      onRefresh: getAllStocks,
+                      child: ListView.builder(
+                        itemCount: userStockList.length,
+                        itemBuilder: (context, i) {
+                          final listKey = Key(i.toString());
+                          return Dismissible(
+                            key: listKey,
+                            onDismissed: (direction) {
+                              String tempStock = userSymbolList[i];
+                              userSymbolList.removeAt(i);
+                              FirebaseFirestore.instance
+                                  .collection("users")
+                                  .doc(FirebaseAuth.instance.currentUser!.uid)
+                                  .update({
+                                "selected_stocks": userSymbolList.toSet().toList()
+                              });
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Removed ${tempStock}'),
+                                  action: SnackBarAction(
+                                    label: 'Undo',
+                                    onPressed: () {
+                                      userSymbolList.insert(i, tempStock);
+                                      FirebaseFirestore.instance
+                                          .collection("users")
+                                          .doc(FirebaseAuth
+                                              .instance.currentUser!.uid)
+                                          .update({
+                                        "selected_stocks": userSymbolList.toSet().toList()
+                                      });
+                                    },
+                                  ),
                                 ),
                               );
-                            }),
+                            },
+                            direction: DismissDirection.horizontal,
+                            dragStartBehavior: DragStartBehavior.start,
+                            movementDuration: const Duration(milliseconds: 200),
+                            resizeDuration: const Duration(milliseconds: 1000),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            StockScreen(symbol: userStockList[i].symbol)));
+                              },
+                              child: ListObject(
+                                symbol: userStockList[i].symbol,
+                                name: userStockList[i].name,
+                                currPrice: ref.watch(realTimeDataProvider(userStockList[i].symbol)).when(data: 
+                                (realTimeData) {
+                                        if (realTimeData != null) {
+                                          return Column(
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              FittedBox(
+                                                child: Text(
+                                                  "\$ ${realTimeData["price"].toString()}",
+                                                  style: const TextStyle(
+                                                      fontWeight: FontWeight.bold, fontSize: 15),
+                                                ),
+                                              ),
+                                              Row(
+                                                children: [
+                                                  const SizedBox(width: 8),
+                                                  Text(
+                                                    "% " + realTimeData["change_percentage"].toString(),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          );
+                                        } else {
+                                          return Center(child: CircularProgressIndicator());
+                                        }
+                                      }, error: (error, stack) => Text('Error: $error'), loading: () => CircularProgressIndicator()),
+
+
+
+                                miniChart: ref.watch(dailyChartDataProvider(userStockList[i].symbol)).when(data: 
+                                (dailyChartData) {
+                                        if (dailyChartData != null) {
+                                          return MiniChart(data: dailyChartData.cast<double>());
+                                        } else {
+                                          return CircularProgressIndicator();
+                                        }
+                                      }, error: (error, stack) => Text('Error: $error'), loading: () => CircularProgressIndicator())
+                                      
+                                    ),
+                              ),
+                            );
+                          
+                        },
                       ),
-                    );
-                  }
-                })
-          ],
-        )
-        : Center(child: CircularProgressIndicator());
+                    ),
+                  );
+                }
+                // Handle the case when data is null or "selected_stocks" is not available
+                return Text("No data available");
+              } else {
+                // Document does not exist
+                return Text("Document does not exist");
+              }
+            },
+            loading: () => Center(child:CircularProgressIndicator()),
+            error: (error, stack) => Text('Error: $error'),
+          ),
+          // End of snapshotAsync.when() method
+        ],
+      )
+    : Center(child: CircularProgressIndicator());
+
   }
+
+
 }
-
-
-

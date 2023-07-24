@@ -61,6 +61,7 @@ class _NewsPageState extends State<NewsPage> {
           
       newsItem.sort((a, b) => a.publishOn.compareTo(b.publishOn));
       newsItem = newsItem.reversed.toList();
+      
       setState(() {
           
           haveSymbol = true;
